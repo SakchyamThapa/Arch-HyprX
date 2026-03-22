@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# install.sh - Complete setup script for Dotfiles
-# This script installs all packages and sets up symlinks for dotfiles
+# install.sh - Complete setup script for HyprX
+# This script installs all packages and sets up symlinks for HyprX
 
 set -e  # Exit on error
 set -u  # Treat unset variables as errors
@@ -36,8 +36,8 @@ if [ "$EUID" -eq 0 ]; then
     exit 1
 fi
 
-# Your home and Dotfiles directories
-DOTFILES="$HOME/Dotfiles"
+# Your home and HyprX directories
+HyprX="$HOME/HyprX"
 CONFIG="$HOME/.config"
 
 # ============================================================================
@@ -206,20 +206,20 @@ if [[ "$install_zsh" =~ ^[Yy]$ ]]; then
 fi
 
 # ============================================================================
-# PART 3: DOTFILES SYMLINK SETUP
+# PART 3: HyprX SYMLINK SETUP
 # ============================================================================
 
-print_status "Starting Dotfiles symlink setup..."
+print_status "Starting HyprX symlink setup..."
 
-# Ensure Dotfiles directory exists
-mkdir -p "$DOTFILES"
+# Ensure HyprX directory exists
+mkdir -p "$HyprX"
 
 # List of config directories to symlink
 apps=("hypr" "kitty" "rofi" "waybar" "swaync")
 
 for app in "${apps[@]}"; do
-    # Check if the app directory exists in Dotfiles
-    if [ -d "$DOTFILES/$app" ]; then
+    # Check if the app directory exists in HyprX
+    if [ -d "$HyprX/$app" ]; then
         print_status "Setting up symlink for $app..."
 
         # Handle existing config in .config
@@ -227,8 +227,8 @@ for app in "${apps[@]}"; do
             if [ ! -L "$CONFIG/$app" ]; then
                 # It's a regular directory/file, not a symlink
                 print_warning "Found existing $app config at $CONFIG/$app"
-                print_warning "Moving to $DOTFILES/$app (backup created)"
-                mv "$CONFIG/$app" "$DOTFILES/$app.bak.$(date +%Y%m%d-%H%M%S)"
+                print_warning "Moving to $HyprX/$app (backup created)"
+                mv "$CONFIG/$app" "$HyprX/$app.bak.$(date +%Y%m%d-%H%M%S)"
             else
                 # It's an existing symlink, remove it
                 print_warning "Removing old symlink $CONFIG/$app"
@@ -237,10 +237,10 @@ for app in "${apps[@]}"; do
         fi
 
         # Create the symlink
-        ln -s "$DOTFILES/$app" "$CONFIG/$app"
+        ln -s "$HyprX/$app" "$CONFIG/$app"
         print_success "Created symlink for $app"
     else
-        print_warning "Directory $DOTFILES/$app not found. Skipping..."
+        print_warning "Directory $HyprX/$app not found. Skipping..."
     fi
 done
 
@@ -258,10 +258,10 @@ yay -S nwg-look
 yay -S adw-gtk-theme
 yay -S ristretto
 
-# Symlink home dotfiles
-HOME_DOTFILES=(".zshrc" ".p10k.zsh" ".bashrc")
-for file in "${HOME_DOTFILES[@]}"; do
-    if [ -f "$DOTFILES/$file" ]; then
+# Symlink home HyprX
+HOME_HyprX=(".zshrc" ".p10k.zsh" ".bashrc")
+for file in "${HOME_HyprX[@]}"; do
+    if [ -f "$HyprX/$file" ]; then
         print_status "Setting up symlink for $file..."
         if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
             print_warning "Backing up existing $HOME/$file to $HOME/$file.backup"
@@ -270,12 +270,12 @@ for file in "${HOME_DOTFILES[@]}"; do
         if [ -L "$HOME/$file" ]; then
             rm "$HOME/$file"
         fi
-        ln -s "$DOTFILES/$file" "$HOME/$file"
+        ln -s "$HyprX/$file" "$HOME/$file"
         print_success "Created symlink for $file"
     fi
 done
 
-print_success "Dotfiles symlink setup complete!"
+print_success "HyprX symlink setup complete!"
 
 # ============================================================================
 # PART 4: FINAL TOUCHES
@@ -299,7 +299,7 @@ print_status "Installed packages:"
 echo -e "${GREEN}Official repositories:${NC} ${PACMAN_PACKAGES[*]}"
 echo -e "${GREEN}AUR packages:${NC} ${YAY_PACKAGES[*]}"
 echo ""
-print_status "Symlinks created for: ${apps[*]} and ${HOME_DOTFILES[*]}"
+print_status "Symlinks created for: ${apps[*]} and ${HOME_HyprX[*]}"
 echo ""
 print_warning "Next steps:"
 echo "  1. Restart your terminal or run 'source ~/.zshrc' to apply Zsh changes"

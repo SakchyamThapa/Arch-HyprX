@@ -1,71 +1,71 @@
-Step 1 — Move the existing configs into Dotfiles
-mv ~/ .config/hypr ~/Dotfiles/
-mv ~/ .config/kitty ~/Dotfiles/
+Step 1 — Move the existing configs into HyprX
+mv ~/ .config/hypr ~/HyprX/
+mv ~/ .config/kitty ~/HyprX/
 
-After this, your ~/Dotfiles will contain:
+After this, your ~/HyprX will contain:
 
-~/Dotfiles/
+~/HyprX/
 ├── hypr/
 └── kitty/
 
 And ~/.config will no longer have hypr or kitty.
 
 Step 2 — Create symlinks
-ln -s ~/Dotfiles/hypr ~/.config/hypr
-ln -s ~/Dotfiles/kitty ~/.config/kitty
+ln -s ~/HyprX/hypr ~/.config/hypr
+ln -s ~/HyprX/kitty ~/.config/kitty
 
 Now the directory structure is effectively:
 
 ~/.config/
-├── hypr -> ~/Dotfiles/hypr
-└── kitty -> ~/Dotfiles/kitty
+├── hypr -> ~/HyprX/hypr
+└── kitty -> ~/HyprX/kitty
 Step 3 — Test
 
 Check that the symlinks work:
 
 ls -l ~/.config
-# hypr -> /home/darkkphoenyx/Dotfiles/hypr
-# kitty -> /home/darkkphoenyx/Dotfiles/kitty
+# hypr -> /home/darkkphoenyx/HyprX/hypr
+# kitty -> /home/darkkphoenyx/HyprX/kitty
 
 Follow the symlink to see the real files:
 
 cd ~/.config/hypr
 pwd -P
-# /home/darkkphoenyx/Dotfiles/hypr
+# /home/darkkphoenyx/HyprX/hypr
 
 pwd -P confirms the real path, not the symlink.
 
-✅ Now any edits you make in ~/Dotfiles/hypr or ~/Dotfiles/kitty are automatically reflected in ~/.config because of the symlink.
+✅ Now any edits you make in ~/HyprX/hypr or ~/HyprX/kitty are automatically reflected in ~/.config because of the symlink.
 
-If you want, I can also give you a single command that moves all existing apps inside .config into Dotfiles and symlinks them automatically, so you don’t have to do it one by one. It’s very clean for Dotfiles management.
+If you want, I can also give you a single command that moves all existing apps inside .config into HyprX and symlinks them automatically, so you don’t have to do it one by one. It’s very clean for HyprX management.
 
 Do you want me to do that?
 
 ok so now i want the install.sh also
 
-Perfect — we can make an install.sh script that automates setting up your Dotfiles: moves existing configs, creates symlinks, and ensures everything is clean. Here’s a safe version tailored for your setup:
+Perfect — we can make an install.sh script that automates setting up your HyprX: moves existing configs, creates symlinks, and ensures everything is clean. Here’s a safe version tailored for your setup:
 
 install.sh
 #!/usr/bin/env bash
 set -e  # exit if any command fails
 set -u  # treat unset variables as errors
 
-# Your home and Dotfiles directories
-DOTFILES="$HOME/Dotfiles"
+# Your home and HyprX directories
+HyprX="$HOME/HyprX"
 CONFIG="$HOME/.config"
 
-echo "Starting Dotfiles setup..."
+echo "Starting HyprX setup..."
 
-# Ensure Dotfiles directory exists
-mkdir -p "$DOTFILES"
+# Ensure HyprX directory exists
+mkdir -p "$HyprX"
 
 # List of apps to symlink
 apps=("hypr" "kitty")
 
 for app in "${apps[@]}"; do
     if [ -e "$CONFIG/$app" ] && [ ! -L "$CONFIG/$app" ]; then
-        echo "Moving existing $app config into Dotfiles..."
-        mv "$CONFIG/$app" "$DOTFILES/$app"
+        echo "Moving existing $app config into HyprX..."
+        mv "$CONFIG/$app" "$HyprX/$app"
     fi
 
     # Remove existing symlink if any
@@ -76,13 +76,13 @@ for app in "${apps[@]}"; do
 
     # Create symlink
     echo "Creating symlink for $app..."
-    ln -s "$DOTFILES/$app" "$CONFIG/$app"
+    ln -s "$HyprX/$app" "$CONFIG/$app"
 done
 
-echo "Dotfiles setup complete!"
+echo "HyprX setup complete!"
 How to use it
 
-Save this file as install.sh in your home or in ~/Dotfiles.
+Save this file as install.sh in your home or in ~/HyprX.
 
 Make it executable:
 
@@ -94,8 +94,8 @@ Run it:
 
 ✅ What it does:
 
-Moves your existing hypr and kitty configs into ~/Dotfiles if they aren’t already there.
+Moves your existing hypr and kitty configs into ~/HyprX if they aren’t already there.
 
 Replaces any old symlinks with fresh ones.
 
-Ensures your .config always points to your Dotfiles.
+Ensures your .config always points to your HyprX.
