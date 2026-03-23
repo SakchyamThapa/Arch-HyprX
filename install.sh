@@ -84,7 +84,14 @@ PACMAN_PACKAGES=(
     "swaync"         # Notification daemon
     "man"            # Manual pages
     "xdg-user-dirs"  # User directories management
-    "zsh" 		     #Zshell
+    "zsh" 		     # Zshell
+    "hyprsunset"     # Night light
+    "man"            # Manual viewer
+    "speedtest-cli"  # Network speedtest cli
+    "brightnessctl"  # Brightness
+    "blueman"        # Bluetooth
+    "bluez"          # Blueman Dependency
+    "cava"           # Audio visualizer
 )
 
 # Array of packages to install via yay (AUR)
@@ -257,6 +264,7 @@ yay -Sy ttf-jetbrains-mono-nerd
 yay -S nwg-look
 yay -S adw-gtk-theme
 yay -S ristretto
+yay -S baobab
 
 # Symlink home HyprX
 HOME_HyprX=(".zshrc" ".p10k.zsh" ".bashrc")

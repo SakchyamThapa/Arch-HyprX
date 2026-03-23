@@ -3,10 +3,19 @@
   "margin-top": 10,
   "margin-left": 5,
   "margin-right": 16,
+  "display": "flex",
+  "flex-direction": "column",
 
   "modules-left": ["hyprland/workspaces", "tray"],
   "modules-center": ["clock"],
-  "modules-right": ["pulseaudio", "network", "battery", "custom/notification"],
+  "modules-right": [
+    "custom/brightness",
+    "pulseaudio",
+    "network",
+    "memory",
+    "battery",
+    "custom/notification",
+  ],
 
   "hyprland/workspaces": {
     "format": "{name}",
@@ -28,16 +37,17 @@
   "tray": {
     "icon-size": 21,
     "spacing": 10,
-    // "icons": {
-    //   "blueman": "bluetooth",
-    //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png",
-    // },
   },
 
   "clock": {
     "interval": 60,
     "format": "{:%H:%M}",
     "max-length": 25,
+  },
+
+  "custom/brightness": {
+    "exec": "brightnessctl -m | awk -F, '{gsub(/%/,\"\",$4); brightness=int($4+0.5); if(brightness<=20) icon=\"\"; else if(brightness<=40) icon=\"\"; else if(brightness<=60) icon=\"\"; else if(brightness<=80) icon=\"\"; else icon=\"\"; print $3 \" \" icon}'",
+    "interval": 1,
   },
 
   "pulseaudio": {
@@ -64,6 +74,11 @@
     "tooltip-format-ethernet": "{ifname} ",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
+  },
+
+  "memory": {
+    "interval": 30,
+    "format": "{used:0.1f}G/{total:0.1f}G ",
   },
 
   "battery": {
