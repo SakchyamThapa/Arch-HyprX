@@ -68,9 +68,8 @@
 }
 
 /* Buttons */
-
 .control-center .notification-row .notification-background .close-button {
-  background: transparent;
+  background: @backgroud-alt;
   border-radius: 6px;
   color: @text;
   margin: 0px;
@@ -96,7 +95,6 @@ progressbar {
 }
 
 /* Notifications expanded-group */
-
 .notification-group {
   margin: 2px 8px 2px 8px;
 
@@ -133,10 +131,15 @@ progressbar {
 .widget-title {
   font-size: 1.2em;
   margin: 6px;
+  border-top: 1px solid gray;
+  padding-top: 8px;
 }
 
 .widget-title button {
-  background: @background;
+  background: @blue;
+  font-weight: 500;
+  font-size: 10px;
+  color: @green;
   border-radius: 6px;
   padding: 4px 16px;
 }
