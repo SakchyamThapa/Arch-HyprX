@@ -91,7 +91,7 @@ PACMAN_PACKAGES=(
     "brightnessctl"  # Brightness
     "blueman"        # Bluetooth
     "bluez"          # Blueman Dependency
-    "cava"           # Audio visualizer
+    "bluez-utils"    # Dependency
 )
 
 # Array of packages to install via yay (AUR)
