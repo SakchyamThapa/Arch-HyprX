@@ -77,6 +77,9 @@ PACMAN_PACKAGES=(
     "sbctl"          # Secure boot management
     "hyprland"       # Wayland compositor
     "kitty"          # Terminal emulator
+    "cliphist"         # Clipboard history manager
+    "wl-clipboard"     # Wayland clipboard utilities  
+    "nwg-clipman"      # GTK3 GUI for cliphist
     "swww"           # Wallpaper daemon
     "hyprpaper"      # Wallpaper utility for Hyprland
     "rofi"           # Application launcher
@@ -92,6 +95,9 @@ PACMAN_PACKAGES=(
     "blueman"        # Bluetooth
     "bluez"          # Blueman Dependency
     "bluez-utils"    # Dependency
+    "neovim"         # Neovim text editor
+    "python"         # Python runtime
+    "python-pip"     # Python package manager
 )
 
 # Array of packages to install via yay (AUR)
@@ -222,7 +228,7 @@ print_status "Starting HyprX symlink setup..."
 mkdir -p "$HyprX"
 
 # List of config directories to symlink
-apps=("hypr" "kitty" "rofi" "waybar" "swaync")
+apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim")
 
 for app in "${apps[@]}"; do
     # Check if the app directory exists in HyprX
@@ -258,7 +264,7 @@ done
 yay -Sy ttf-jetbrains-mono-nerd
 
 # ============================================================================
-# PART 4: INSTALL YAY PACKAGES
+# PART 7: INSTALL ADDITIONAL YAY PACKAGES
 # ============================================================================
 
 yay -S nwg-look
@@ -286,7 +292,46 @@ done
 print_success "HyprX symlink setup complete!"
 
 # ============================================================================
-# PART 4: FINAL TOUCHES
+# PART 5: NEOVIM & PYTHON SETUP
+# ============================================================================
+
+print_status "Setting up Neovim with Python tools..."
+
+# Ensure Neovim config directory exists
+if [ ! -d "$HyprX/nvim" ]; then
+    print_warning "Neovim config directory not found at $HyprX/nvim"
+    print_status "Creating Neovim config directory..."
+    mkdir -p "$HyprX/nvim/lua/plugins"
+fi
+
+# Symlink nvim if not already done
+if [ -d "$HyprX/nvim" ] && [ ! -L "$CONFIG/nvim" ]; then
+    print_status "Setting up symlink for nvim..."
+    if [ -e "$CONFIG/nvim" ]; then
+        mv "$CONFIG/nvim" "$CONFIG/nvim.bak.$(date +%Y%m%d-%H%M%S)"
+    fi
+    ln -s "$HyprX/nvim" "$CONFIG/nvim"
+    print_success "Created symlink for nvim"
+fi
+
+# Install Python packages needed for Neovim
+print_status "Installing Python packages..."
+pip install --user black flake8 ruff 2>/dev/null || print_warning "pip install failed, skipping..."
+
+# Install Neovim plugins (LazyVim)
+print_status "Installing Neovim plugins (LazyVim)..."
+nvim --headless "+Lazy! sync" +qa 2>/dev/null || print_warning "Lazy sync failed, run :Lazy sync manually"
+
+# Install Mason tools (LSP, formatters, linters)
+print_status "Installing Mason tools (LSP, formatters, linters)..."
+nvim --headless "+MasonInstallAll" +qa 2>/dev/null || print_warning "Mason install failed, run :MasonInstallAll manually"
+
+print_success "Neovim setup complete!"
+
+# ============================================================================
+# PART 6: INSTALL FONT
+# ============================================================================
+# PART 8: FINAL TOUCHES
 # ============================================================================
 
 # Check if we're on Hyprland and offer to reload
@@ -314,3 +359,5 @@ echo "  1. Restart your terminal or run 'source ~/.zshrc' to apply Zsh changes"
 echo "  2. If you're using Powerlevel10k for the first time, it will prompt for configuration"
 echo "  3. Run 'p10k configure' if you want to reconfigure Powerlevel10k"
 echo "  4. Review your config files in ~/.config/ to ensure everything works"
+echo "  5. For Neovim Copilot: Run ':Copilot auth' to authenticate with GitHub"
+echo "  6. Optionally set: export COPILOT_AUTHORIZATION_TOKEN=<your-token> in .zshrc"
