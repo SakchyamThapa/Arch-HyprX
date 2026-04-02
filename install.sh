@@ -41,6 +41,16 @@ HyprX="$HOME/HyprX"
 CONFIG="$HOME/.config"
 
 # ============================================================================
+# PART 0: PREPARE SCRIPTS
+# ============================================================================
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+chmod +x "$SCRIPT_DIR/scripts/package-list.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/install-node.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/install-tools.sh" 2>/dev/null || true
+
+# ============================================================================
 # PART 1: PACKAGE INSTALLATION
 # ============================================================================
 
@@ -68,41 +78,153 @@ else
     print_status "yay is already installed"
 fi
 
-# Array of packages to install via pacman
+# Array of packages to install via pacman (from packages/pacman.txt)
 PACMAN_PACKAGES=(
-    "tree"           # Directory tree viewer
-    "github-cli"     # GitHub CLI tool
-    "exa"            # Modern ls replacement
-    "fastfetch"      # System information display
-    "sbctl"          # Secure boot management
-    "hyprland"       # Wayland compositor
-    "kitty"          # Terminal emulator
-    "cliphist"         # Clipboard history manager
-    "wl-clipboard"     # Wayland clipboard utilities  
-    "nwg-clipman"      # GTK3 GUI for cliphist
-    "swww"           # Wallpaper daemon
-    "hyprpaper"      # Wallpaper utility for Hyprland
-    "rofi"           # Application launcher
-    "waybar"         # Status bar
-    "swaync"         # Notification daemon
-    "man"            # Manual pages
-    "xdg-user-dirs"  # User directories management
-    "zsh" 		     # Zshell
-    "hyprsunset"     # Night light
-    "man"            # Manual viewer
-    "speedtest-cli"  # Network speedtest cli
-    "brightnessctl"  # Brightness
-    "blueman"        # Bluetooth
-    "bluez"          # Blueman Dependency
-    "bluez-utils"    # Dependency
-    "neovim"         # Neovim text editor
-    "python"         # Python runtime
-    "python-pip"     # Python package manager
+    # Core
+    "base"
+    "base-devel"
+    "git"
+    "sudo"
+    "zsh"
+    "man-db"
+    "nano"
+    "vim"
+    "tree"
+    "wget"
+    "zip"
+    "htop"
+    "just"
+    
+    # Hyprland & Desktop
+    "hyprland"
+    "hyprpaper"
+    "hyprsunset"
+    "uwsm"
+    "xdg-desktop-portal-hyprland"
+    "xdg-utils"
+    "xdg-user-dirs"
+    "xorg-server"
+    "xorg-xinit"
+    "qt5-wayland"
+    "qt6-wayland"
+    "qt5-base"
+    
+    # Terminal & Shells
+    "kitty"
+    "zsh"
+    
+    # Status bar & Apps
+    "waybar"
+    "rofi"
+    "wofi"
+    "swaync"
+    "dunst"
+    
+    # Tools
+    "flameshot"
+    "grim"
+    "slurp"
+    "brightnessctl"
+    "cliphist"
+    "wl-clipboard"
+    "nwg-clipman"
+    "nwg-look"
+    "adw-gtk-theme"
+    "ffmpeg"
+    "fastfetch"
+    "eza"
+    
+    # Networking
+    "iwd"
+    "wireless_tools"
+    "openssh"
+    "speedtest-cli"
+    
+    # Audio/Video
+    "pipewire"
+    "pipewire-alsa"
+    "pipewire-jack"
+    "pipewire-pulse"
+    "libpulse"
+    "gst-plugin-pipewire"
+    "wireplumber"
+    "sof-firmware"
+    "spotify-launcher"
+    "ristretto"
+    
+    # Bluetooth
+    "blueman"
+    "bluez"
+    "bluez-utils"
+    
+    # Graphics & Display
+    "nvidia-open-dkms"
+    "nvidia-utils"
+    "libva-nvidia-driver"
+    "amd-ucode"
+    "linux-firmware"
+    "libva-nvidia-driver"
+    
+    # File Managers & Media
+    "dolphin"
+    "nautilus"
+    "mousepad"
+    "baobab"
+    
+    # Dev Tools
+    "neovim"
+    "github-cli"
+    "nodejs"
+    "npm"
+    "python"
+    "python-pip"
+    "python-virtualenv"
+    
+    # Browsers
+    "firefox"
+    "vivaldi"
+    "vivaldi-ffmpeg-codecs"
+    "brave-bin"
+    
+    # Communication
+    "discord"
+    "slack-desktop"
+    "postman-bin"
+    
+    # Virtualization & Containers
+    "docker"
+    "docker-compose"
+    "dkms"
+    
+    # System
+    "sbctl"
+    "efibootmgr"
+    "smartmontools"
+    "zram-generator"
+    "power-profiles-daemon"
+    "polkit-kde-agent"
+    
+    # Security
+    "gdm"
+    
+    # Fonts
+    "ttf-jetbrains-mono-nerd"
 )
 
-# Array of packages to install via yay (AUR)
+# Array of packages to install via yay (AUR) (from packages/aur.txt)
 YAY_PACKAGES=(
-    "visual-studio-code-bin" # Visual Studio Code
+    "visual-studio-code-bin"
+    "yay"
+    "brave-bin"
+    "postman-bin"
+    "slack-desktop"
+    "discord"
+    "dbeaver"
+    "nwg-look"
+    "adw-gtk-theme"
+    "ristretto"
+    "baobab"
+    "ttf-jetbrains-mono-nerd"
 )
 
 # Install pacman packages
@@ -132,6 +254,22 @@ print_status "Creating user directories..."
 xdg-user-dirs-update
 
 print_success "Package installation complete!"
+
+# ============================================================================
+# PART 1B: NODE.JS & TOOLS SETUP
+# ============================================================================
+
+print_status "Setting up Node.js and tools..."
+
+# Install Node.js with nvm
+if [ -f "$SCRIPT_DIR/scripts/install-node.sh" ]; then
+    bash "$SCRIPT_DIR/scripts/install-node.sh"
+fi
+
+# Install other tools
+if [ -f "$SCRIPT_DIR/scripts/install-tools.sh" ]; then
+    bash "$SCRIPT_DIR/scripts/install-tools.sh"
+fi
 
 # ============================================================================
 # PART 2: OH-MY-ZSH AND POWERLEVEL10K SETUP
@@ -258,19 +396,8 @@ for app in "${apps[@]}"; do
 done
 
 # ============================================================================
-# PART 4: INSTALL FONT
+# PART 4: SYMLINK HOME FILES
 # ============================================================================
-
-yay -Sy ttf-jetbrains-mono-nerd
-
-# ============================================================================
-# PART 7: INSTALL ADDITIONAL YAY PACKAGES
-# ============================================================================
-
-yay -S nwg-look
-yay -S adw-gtk-theme
-yay -S ristretto
-yay -S baobab
 
 # Symlink home HyprX
 HOME_HyprX=(".zshrc" ".p10k.zsh" ".bashrc")
@@ -329,9 +456,21 @@ nvim --headless "+MasonInstallAll" +qa 2>/dev/null || print_warning "Mason insta
 print_success "Neovim setup complete!"
 
 # ============================================================================
-# PART 6: INSTALL FONT
+# PART 6: EXPORT PACKAGE LISTS
 # ============================================================================
-# PART 8: FINAL TOUCHES
+
+print_status "Would you like to update package lists? (y/n)"
+print_status "This exports your current packages to HyprX/packages/ for backup"
+read -r update_packages
+if [[ "$update_packages" =~ ^[Yy]$ ]]; then
+    if [ -f "$SCRIPT_DIR/scripts/package-list.sh" ]; then
+        bash "$SCRIPT_DIR/scripts/package-list.sh"
+        print_success "Package lists updated!"
+    fi
+fi
+
+# ============================================================================
+# PART 7: FINAL TOUCHES
 # ============================================================================
 
 # Check if we're on Hyprland and offer to reload

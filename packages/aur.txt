@@ -1,0 +1,6 @@
+brave-bin
+postman-bin
+slack-desktop
+visual-studio-code-bin
+yay
+yay-debug
