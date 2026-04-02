@@ -29,6 +29,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Aliases for common commands
 alias ls="exa -la"
+alias aura="hyprctl"
 
 # Source Powerlevel10k configuration if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
