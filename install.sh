@@ -456,6 +456,56 @@ nvim --headless "+MasonInstallAll" +qa 2>/dev/null || print_warning "Mason insta
 print_success "Neovim setup complete!"
 
 # ============================================================================
+# PART 5B: BATTERY CONSERVATION SCRIPT
+# ============================================================================
+
+print_status "Setting up battery conservation script..."
+mkdir -p "$HOME/.local/bin"
+if [ -f "$SCRIPT_DIR/scripts/battery-limit.sh" ]; then
+    cp "$SCRIPT_DIR/scripts/battery-limit.sh" "$HOME/.local/bin/battery-limit.sh"
+    chmod +x "$HOME/.local/bin/battery-limit.sh"
+    print_success "Battery limit script installed to ~/.local/bin/battery-limit.sh"
+fi
+
+# Create aura-battery wrapper script
+print_status "Creating aura-battery wrapper..."
+cat > "$HOME/.local/bin/aura-battery" << 'EOF'
+#!/bin/bash
+PATH_TO="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+
+case "$1" in
+    1|on)
+        echo 1 | sudo tee "$PATH_TO" > /dev/null
+        echo "Battery: 80% limit enabled"
+        ;;
+    0|off)
+        echo 0 | sudo tee "$PATH_TO" > /dev/null
+        echo "Battery: 100% charging enabled"
+        ;;
+    status|s)
+        status=$(cat "$PATH_TO")
+        [ "$status" = "1" ] && echo "ON (80%)" || echo "OFF (100%)"
+        ;;
+    *)
+        echo "Usage: aura-battery [1|0|status]"
+        echo "  1/on   - Enable 80% limit"
+        echo "  0/off  - Disable (100%)"
+        echo "  status - Check status"
+        ;;
+esac
+EOF
+chmod +x "$HOME/.local/bin/aura-battery"
+
+# Create symlink in /usr/local/bin so sudo can find it
+print_status "Creating symlink for sudo aura-battery..."
+if [ ! -f /usr/local/bin/aura-battery ]; then
+    ln -sf "$HOME/.local/bin/aura-battery" /usr/local/bin/aura-battery
+    print_success "Symlink created: /usr/local/bin/aura-battery"
+fi
+
+print_success "Battery conservation setup complete!"
+
+# ============================================================================
 # PART 6: EXPORT PACKAGE LISTS
 # ============================================================================
 

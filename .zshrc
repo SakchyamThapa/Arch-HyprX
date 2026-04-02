@@ -31,5 +31,10 @@ source $ZSH/oh-my-zsh.sh
 alias ls="exa -la"
 alias aura="hyprctl"
 
+# Battery subcommand for aura
+aura-battery() {
+    sudo /usr/local/bin/aura-battery "$@"
+}
+
 # Source Powerlevel10k configuration if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
