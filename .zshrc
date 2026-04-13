@@ -29,15 +29,51 @@ source $ZSH/oh-my-zsh.sh
 # export EDITOR='nvim'
 
 # Aliases for common commands
-alias ls="exa -la"
-alias aura="hyprctl"
-# alias wf="wifite"
-alias wf="$HOME/.config/scripts/wifite.sh"
+# alias ls="exa -la"
+# alias aura="hyprctl"
 
-# Battery subcommand for aura
-aura-battery() {
-    sudo /usr/local/bin/aura-battery "$@"
+# #nmcli QRCode generation for Wi-Fi networks
+# alias aura-qr="nmcli dev wifi show-password"
+# alias wf="$HOME/.config/scripts/wifite.sh"
+
+
+# Main aura command function with subcommands
+aura() {
+    case "$1" in
+        qr)
+            nmcli dev wifi show-password
+            ;;
+        wifi)
+            case "$2" in
+                delete)
+                    if [ -z "$3" ]; then
+                        echo "Usage: aura wifi delete <ssid>"
+                    else
+                        echo "Delete network '$3'? (y/n)"
+                        read -r confirm
+                        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                            sudo nmcli connection delete "$3"
+                        else
+                            echo "Cancelled."
+                        fi
+                    fi
+                    ;;
+                *)
+                    "$HOME/.config/scripts/wifite.sh" "${@:2}"
+                    ;;
+            esac
+            ;;
+        battery)
+            sudo /usr/local/bin/aura-battery "$@"
+            ;;
+        *)
+            hyprctl "$@"
+            ;;
+    esac
 }
+
+
 
 # Source Powerlevel10k configuration if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

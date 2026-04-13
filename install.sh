@@ -94,6 +94,7 @@ PACMAN_PACKAGES=(
     "zip"
     "htop"
     "just"
+    "libnotify"
     
     # Hyprland & Desktop
     "hyprland"
@@ -209,6 +210,7 @@ PACMAN_PACKAGES=(
     
     # Fonts
     "ttf-jetbrains-mono-nerd"
+    "noto-fonts-emoji"
 )
 
 # Array of packages to install via yay (AUR) (from packages/aur.txt)
@@ -254,6 +256,10 @@ print_status "Creating user directories..."
 xdg-user-dirs-update
 
 print_success "Package installation complete!"
+# Rebuild font cache for emoji support
+print_status "Rebuilding font cache..."
+fc-cache -fv
+print_success "Font cache rebuilt!"
 
 # ============================================================================
 # PART 1B: NODE.JS & TOOLS SETUP
