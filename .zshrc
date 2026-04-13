@@ -1,3 +1,4 @@
+fastfetch --kitty-direct ~/.config/fastfetch/image/image.png
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -30,6 +31,8 @@ source $ZSH/oh-my-zsh.sh
 # Aliases for common commands
 alias ls="exa -la"
 alias aura="hyprctl"
+# alias wf="wifite"
+alias wf="$HOME/.config/scripts/wifite.sh"
 
 # Battery subcommand for aura
 aura-battery() {

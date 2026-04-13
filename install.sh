@@ -121,7 +121,6 @@ PACMAN_PACKAGES=(
     "dunst"
     
     # Tools
-    "flameshot"
     "grim"
     "slurp"
     "brightnessctl"
@@ -139,6 +138,7 @@ PACMAN_PACKAGES=(
     "wireless_tools"
     "openssh"
     "speedtest-cli"
+    "networkmanager"
     
     # Audio/Video
     "pipewire"
