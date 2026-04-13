@@ -47,7 +47,6 @@ neovim
 nodejs
 npm
 nvidia-open-dkms
-nwg-clipman
 nwg-look
 openssh
 pipewire

@@ -127,7 +127,6 @@ PACMAN_PACKAGES=(
     "brightnessctl"
     "cliphist"
     "wl-clipboard"
-    "nwg-clipman"
     "nwg-look"
     "adw-gtk-theme"
     "ffmpeg"
