@@ -37,40 +37,45 @@ source $ZSH/oh-my-zsh.sh
 # alias wf="$HOME/.config/scripts/wifite.sh"
 
 
-# Main aura command function with subcommands
-aura() {
-    case "$1" in
-        qr)
-            nmcli dev wifi show-password
-            ;;
-        wifi)
-            case "$2" in
-                delete)
-                    if [ -z "$3" ]; then
-                        echo "Usage: aura wifi delete <ssid>"
-                    else
-                        echo "Delete network '$3'? (y/n)"
-                        read -r confirm
-                        if [[ "$confirm" =~ ^[Yy]$ ]]; then
-                            sudo nmcli connection delete "$3"
-                        else
-                            echo "Cancelled."
-                        fi
-                    fi
-                    ;;
-                *)
-                    "$HOME/.config/scripts/wifite.sh" "${@:2}"
-                    ;;
-            esac
-            ;;
-        battery)
-            sudo /usr/local/bin/aura-battery "$@"
-            ;;
-        *)
-            hyprctl "$@"
-            ;;
-    esac
-}
+# Load aura completion
+autoload -U compinit && compinit
+fpath=("$HOME/.config/completions" $fpath)
+autoload -Uz _aura
+
+# # Main aura command function with subcommands
+# aura() {
+#     case "$1" in
+#         qr)
+#             nmcli dev wifi show-password
+#             ;;
+#         wifi)
+#             case "$2" in
+#                 delete)
+#                     if [ -z "$3" ]; then
+#                         echo "Usage: aura wifi delete <ssid>"
+#                     else
+#                         echo "Delete network '$3'? (y/n)"
+#                         read -r confirm
+#                         if [[ "$confirm" =~ ^[Yy]$ ]]; then
+#                             sudo nmcli connection delete "$3"
+#                         else
+#                             echo "Cancelled."
+#                         fi
+#                     fi
+#                     ;;
+#                 *)
+#                     "$HOME/.config/scripts/wifite.sh" "${@:2}"
+#                     ;;
+#             esac
+#             ;;
+#         battery)
+#             sudo /usr/local/bin/aura-battery "$@"
+#             ;;
+#         *)
+#             hyprctl "$@"
+#             ;;
+#     esac
+# }
 
 
 

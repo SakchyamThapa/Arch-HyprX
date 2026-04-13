@@ -1,0 +1,31 @@
+#compdef aura
+
+_aura() {
+    local -a commands
+    commands=(
+        'qr:Show QR code of current Wi-Fi'
+        'wifi:Wi-Fi management'
+        'battery:Battery management'
+    )
+    local -a wifi_commands
+    wifi_commands=(
+        'delete:Delete saved Wi-Fi network'
+    )
+    case $words[2] in
+        wifi)
+            case $words[3] in
+                delete)
+                    _describe 'ssid' wifi_commands
+                    ;;
+                *)
+                    _describe 'wifi command' wifi_commands
+                    _wanted ssids expl 'saved networks' compadd $(nmcli -t -g NAME connection show 2>/dev/null)
+                    ;;
+            esac
+            ;;
+        *)
+            _describe 'command' commands
+            ;;
+    esac
+}
+_aura "$@"
