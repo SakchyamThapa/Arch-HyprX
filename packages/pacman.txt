@@ -9,7 +9,6 @@ bluez
 bluez-utils
 brave-bin
 brightnessctl
-cliphist
 dbeaver
 discord
 dkms

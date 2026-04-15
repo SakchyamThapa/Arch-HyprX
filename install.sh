@@ -125,7 +125,6 @@ PACMAN_PACKAGES=(
     "grim"
     "slurp"
     "brightnessctl"
-    "cliphist"
     "wl-clipboard"
     "nwg-look"
     "adw-gtk-theme"

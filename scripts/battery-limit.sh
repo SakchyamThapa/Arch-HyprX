@@ -80,7 +80,7 @@ main "$@"
 #    - Replace entire array back to original minimal ~20 packages:
 #      PACMAN_PACKAGES=(
 #          "tree" "github-cli" "exa" "fastfetch" "sbctl" "hyprland" "kitty" 
-#          "cliphist" "wl-clipboard" "nwg-clipman" "swww" "hyprpaper" "rofi" 
+#          "wl-clipboard" "nwg-clipman" "swww" "hyprpaper" "rofi" 
 #          "waybar" "swaync" "man" "xdg-user-dirs" "zsh" "hyprsunset" "man" 
 #          "speedtest-cli" "brightnessctl" "blueman" "bluez" "bluez-utils" 
 #          "neovim" "python" "python-pip"
