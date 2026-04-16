@@ -42,7 +42,7 @@ source $ZSH/oh-my-zsh.sh
 # autoload -Uz _aura
 # compinit -C
 
-
+alias dev="nepkal gcal"
 # Main aura command function with subcommands
 aura() {
     case "$1" in
