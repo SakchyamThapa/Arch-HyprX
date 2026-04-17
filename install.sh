@@ -225,6 +225,7 @@ YAY_PACKAGES=(
     "ristretto"
     "baobab"
     "ttf-jetbrains-mono-nerd"
+    "bibata-cursor-theme"
 )
 
 # Install pacman packages
