@@ -79,10 +79,10 @@
   },
 
   "network": {
-    "interface": "wlan0", //command to get the network card: ip -c a
+    // "interface": "wlan0", //command to get the network card: ip -c a
     "format": "{ifname}",
     "format-wifi": "{essid}  ",
-    "format-ethernet": "{ipaddr}/{cidr} 󰊗",
+    "format-ethernet": "{ipaddr}/{cidr} 󰌢",
     "format-disconnected": "Disconnected", //An empty format will hide the module.
     "tooltip-format": "{ifname} via {gwaddr} 󰊗",
     "tooltip-format-wifi": "{essid}  \n{ipaddr}",
