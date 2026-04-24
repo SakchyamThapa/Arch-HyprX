@@ -43,7 +43,7 @@ source $ZSH/oh-my-zsh.sh
 # compinit -C
 
 alias eng="nepkal gcal"
-alias nep="nepkal gcal"
+alias nep="nepkal"
 
 # Main aura command function with subcommands
 aura() {
