@@ -49,6 +49,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 chmod +x "$SCRIPT_DIR/scripts/package-list.sh" 2>/dev/null || true
 chmod +x "$SCRIPT_DIR/scripts/install-node.sh" 2>/dev/null || true
 chmod +x "$SCRIPT_DIR/scripts/install-tools.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/rofi-wifi-menu.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/wifite.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/fix-symlink.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/waybar/launch.sh" 2>/dev/null || true
 
 # ============================================================================
 # PART 1: PACKAGE INSTALLATION
@@ -371,7 +375,7 @@ print_status "Starting HyprX symlink setup..."
 mkdir -p "$HyprX"
 
 # List of config directories to symlink
-apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions")
+apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset")
 
 for app in "${apps[@]}"; do
     # Check if the app directory exists in HyprX
@@ -511,6 +515,35 @@ fi
 print_success "Battery conservation setup complete!"
 
 # ============================================================================
+# PART 5C: WIFI MENU SCRIPTS
+# ============================================================================
+
+print_status "Setting up wifi scripts..."
+if [ -f "$SCRIPT_DIR/scripts/fix-symlink.sh" ]; then
+    bash "$SCRIPT_DIR/scripts/fix-symlink.sh"
+    print_success "Wifi symlink fix applied"
+fi
+
+print_warning "Do you want to set up wifi menu scripts? (y/n)"
+read -r setup_wifi
+if [[ "$setup_wifi" =~ ^[Yy]$ ]]; then
+    if [ -f "$SCRIPT_DIR/scripts/wifite.sh" ]; then
+        print_status "Installing wifite utility..."
+        mkdir -p "$HOME/.local/bin"
+        cp "$SCRIPT_DIR/scripts/wifite.sh" "$HOME/.local/bin/wifite"
+        chmod +x "$HOME/.local/bin/wifite"
+        print_success "Wifite installed to ~/.local/bin/wifite"
+    fi
+    if [ -f "$SCRIPT_DIR/scripts/rofi-wifi-menu.sh" ]; then
+        print_status "Installing rofi wifi menu..."
+        cp "$SCRIPT_DIR/scripts/rofi-wifi-menu.sh" "$HOME/.local/bin/rofi-wifi-menu"
+        chmod +x "$HOME/.local/bin/rofi-wifi-menu"
+        print_success "Rofi wifi menu installed to ~/.local/bin/rofi-wifi-menu"
+    fi
+    print_warning "Bind rofi-wifi-menu in Hyprland: bind = SUPER, R, exec, ~/.local/bin/rofi-wifi-menu"
+fi
+
+# ============================================================================
 # PART 6: EXPORT PACKAGE LISTS
 # ============================================================================
 
@@ -546,7 +579,7 @@ print_status "Installed packages:"
 echo -e "${GREEN}Official repositories:${NC} ${PACMAN_PACKAGES[*]}"
 echo -e "${GREEN}AUR packages:${NC} ${YAY_PACKAGES[*]}"
 echo ""
-print_status "Symlinks created for: ${apps[*]} and ${HOME_HyprX[*]}"
+print_status "Symlinks created for: ${apps[*]} and .bashrc, .zshrc, .p10k.zsh"
 echo ""
 print_warning "Next steps:"
 echo "  1. Restart your terminal or run 'source ~/.zshrc' to apply Zsh changes"
