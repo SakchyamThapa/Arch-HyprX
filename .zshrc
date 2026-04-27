@@ -44,6 +44,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias eng="nepkal gcal"
 alias nep="nepkal"
+alias file="yazi"
 
 # Main aura command function with subcommands
 aura() {
