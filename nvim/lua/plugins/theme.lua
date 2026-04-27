@@ -78,13 +78,13 @@ return {
 --     config = function()
 --       vim.o.termguicolors = true
 --       vim.o.background = "dark"
---
+
 --       -- can set the background to -> soft, medium, hard
 --       vim.g.everforest_background = "medium"
 --       vim.g.everforest_enable_italic = 1
 --       vim.g.everforest_disable_italic_comment = 0
 --       vim.g.everforest_better_performance = 1
---
+
 --       vim.cmd.colorscheme("everforest")
 --     end,
 --   },
@@ -104,7 +104,7 @@ return {
 --     config = function()
 --       vim.o.termguicolors = true
 --       vim.o.background = "dark"
---
+
 --       require("gruvbox").setup({
 --         contrast = "hard",
 --         italic = {
@@ -115,10 +115,10 @@ return {
 --         },
 --         overrides = {},
 --       })
---
+
 --       -- apply colorscheme
 --       vim.cmd.colorscheme("gruvbox")
 --     end,
 --   },
 -- }
---
+
