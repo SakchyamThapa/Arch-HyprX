@@ -1,0 +1,24 @@
+#compdef aura
+
+_aura() {
+    local -a cmds
+    cmds=(
+        'qr:Show QR code of current WiFi'
+        'wifi:WiFi management'
+        'battery:Battery management'
+    )
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+    case $words[2] in
+        wifi)
+            local -a ssids
+            ssids=($(nmcli -t -g NAME connection show 2>/dev/null))
+            _describe 'saved networks' ssids
+            ;;
+        qr|battery)
+            ;;
+        *)
+            _describe 'aura commands' cmds
+            ;;
+    esac
+}

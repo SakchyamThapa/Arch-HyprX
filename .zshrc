@@ -1,3 +1,4 @@
+fastfetch --kitty-direct ~/.config/fastfetch/image/Hanuman.png
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -28,7 +29,82 @@ source $ZSH/oh-my-zsh.sh
 # export EDITOR='nvim'
 
 # Aliases for common commands
-alias ls="exa -la"
+# alias ls="exa -la"
+# alias aura="hyprctl"
+
+# #nmcli QRCode generation for Wi-Fi networks
+# alias aura-qr="nmcli dev wifi show-password"
+# alias wf="$HOME/.config/scripts/wifite.sh"
+
+
+# Load aura completion
+# fpath=("$HOME/.config/completions" $fpath)
+# autoload -Uz _aura
+# compinit -C
+
+alias eng="nepkal gcal"
+alias nep="nepkal"
+
+# Main aura command function with subcommands
+aura() {
+    case "$1" in
+        qr)
+            nmcli dev wifi show-password
+            ;;
+        wifi)
+            case "$2" in
+                delete)
+                    if [ -z "$3" ]; then
+                        echo "Usage: aura wifi delete <ssid>"
+                    else
+                        echo "Delete network '$3'? (y/n)"
+                        read -r confirm
+                        if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                            sudo nmcli connection delete "$3"
+                        else
+                            echo "Cancelled."
+                        fi
+                    fi
+                    ;;
+                *)
+                    "$HOME/.config/scripts/wifite.sh" "${@:2}"
+                    ;;
+            esac
+            ;;
+        battery)
+            sudo /usr/local/bin/aura-battery "$@"
+            ;;
+        *)
+            hyprctl "$@"
+            ;;
+    esac
+}
+
+
+
+
+# Tab completion for aura
+compdef _aura_compfunc aura
+_aura_compfunc() {
+    local -a cmds
+    cmds=(qr wifi battery)
+    
+    case $words[2] in
+        wifi)
+            local -a ssids
+            ssids=($(nmcli -t -g NAME connection show 2>/dev/null))
+            compadd -a ssids
+            ;;
+        qr|battery)
+            ;;
+        *)
+            compadd -a cmds
+            ;;
+    esac
+}
+
+
 
 # Source Powerlevel10k configuration if it exists
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

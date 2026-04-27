@@ -41,6 +41,20 @@ HyprX="$HOME/HyprX"
 CONFIG="$HOME/.config"
 
 # ============================================================================
+# PART 0: PREPARE SCRIPTS
+# ============================================================================
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+chmod +x "$SCRIPT_DIR/scripts/package-list.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/install-node.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/install-tools.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/rofi-wifi-menu.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/wifite.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/scripts/fix-symlink.sh" 2>/dev/null || true
+chmod +x "$SCRIPT_DIR/waybar/launch.sh" 2>/dev/null || true
+
+# ============================================================================
 # PART 1: PACKAGE INSTALLATION
 # ============================================================================
 
@@ -68,41 +82,154 @@ else
     print_status "yay is already installed"
 fi
 
-# Array of packages to install via pacman
+# Array of packages to install via pacman (from packages/pacman.txt)
 PACMAN_PACKAGES=(
-    "tree"           # Directory tree viewer
-    "github-cli"     # GitHub CLI tool
-    "exa"            # Modern ls replacement
-    "fastfetch"      # System information display
-    "sbctl"          # Secure boot management
-    "hyprland"       # Wayland compositor
-    "kitty"          # Terminal emulator
-    "cliphist"         # Clipboard history manager
-    "wl-clipboard"     # Wayland clipboard utilities  
-    "nwg-clipman"      # GTK3 GUI for cliphist
-    "swww"           # Wallpaper daemon
-    "hyprpaper"      # Wallpaper utility for Hyprland
-    "rofi"           # Application launcher
-    "waybar"         # Status bar
-    "swaync"         # Notification daemon
-    "man"            # Manual pages
-    "xdg-user-dirs"  # User directories management
-    "zsh" 		     # Zshell
-    "hyprsunset"     # Night light
-    "man"            # Manual viewer
-    "speedtest-cli"  # Network speedtest cli
-    "brightnessctl"  # Brightness
-    "blueman"        # Bluetooth
-    "bluez"          # Blueman Dependency
-    "bluez-utils"    # Dependency
-    "neovim"         # Neovim text editor
-    "python"         # Python runtime
-    "python-pip"     # Python package manager
+    # Core
+    "base"
+    "base-devel"
+    "git"
+    "sudo"
+    "zsh"
+    "man-db"
+    "nano"
+    "vim"
+    "tree"
+    "wget"
+    "zip"
+    "htop"
+    "just"
+    "libnotify"
+    
+    # Hyprland & Desktop
+    "hyprland"
+    "hyprpaper"
+    "hyprsunset"
+    "uwsm"
+    "xdg-desktop-portal-hyprland"
+    "xdg-utils"
+    "xdg-user-dirs"
+    "xorg-server"
+    "xorg-xinit"
+    "qt5-wayland"
+    "qt6-wayland"
+    "qt5-base"
+    
+    # Terminal & Shells
+    "kitty"
+    "zsh"
+    
+    # Status bar & Apps
+    "waybar"
+    "rofi"
+    "wofi"
+    "swaync"
+    "dunst"
+    
+    # Tools
+    "grim"
+    "slurp"
+    "brightnessctl"
+    "wl-clipboard"
+    "nwg-look"
+    "adw-gtk-theme"
+    "ffmpeg"
+    "fastfetch"
+    "eza"
+    
+    # Networking
+    "iwd"
+    "wireless_tools"
+    "openssh"
+    "speedtest-cli"
+    "networkmanager"
+    
+    # Audio/Video
+    "pipewire"
+    "pipewire-alsa"
+    "pipewire-jack"
+    "pipewire-pulse"
+    "libpulse"
+    "gst-plugin-pipewire"
+    "wireplumber"
+    "sof-firmware"
+    "spotify-launcher"
+    "ristretto"
+    
+    # Bluetooth
+    "blueman"
+    "bluez"
+    "bluez-utils"
+    
+    # Graphics & Display
+    "nvidia-open-dkms"
+    "nvidia-utils"
+    "libva-nvidia-driver"
+    "amd-ucode"
+    "linux-firmware"
+    "libva-nvidia-driver"
+    
+    # File Managers & Media
+    "dolphin"
+    "nautilus"
+    "mousepad"
+    "baobab"
+    
+    # Dev Tools
+    "neovim"
+    "github-cli"
+    "nodejs"
+    "npm"
+    "python"
+    "python-pip"
+    "python-virtualenv"
+    
+    # Browsers
+    "firefox"
+    "vivaldi"
+    "vivaldi-ffmpeg-codecs"
+    "brave-bin"
+    
+    # Communication
+    "discord"
+    "slack-desktop"
+    "postman-bin"
+    
+    # Virtualization & Containers
+    "docker"
+    "docker-compose"
+    "dkms"
+    
+    # System
+    "sbctl"
+    "efibootmgr"
+    "smartmontools"
+    "zram-generator"
+    "power-profiles-daemon"
+    "polkit-kde-agent"
+    
+    # Security
+    "gdm"
+    
+    # Fonts
+    "ttf-jetbrains-mono-nerd"
+    "noto-fonts-emoji"
 )
 
-# Array of packages to install via yay (AUR)
+# Array of packages to install via yay (AUR) (from packages/aur.txt)
 YAY_PACKAGES=(
-    "visual-studio-code-bin" # Visual Studio Code
+    "visual-studio-code-bin"
+    "yay"
+    "brave-bin"
+    "postman-bin"
+    "slack-desktop"
+    "discord"
+    "dbeaver"
+    "nwg-look"
+    "adw-gtk-theme"
+    "ristretto"
+    "baobab"
+    "ttf-jetbrains-mono-nerd"
+    "bibata-cursor-theme"
 )
 
 # Install pacman packages
@@ -132,6 +259,26 @@ print_status "Creating user directories..."
 xdg-user-dirs-update
 
 print_success "Package installation complete!"
+# Rebuild font cache for emoji support
+print_status "Rebuilding font cache..."
+fc-cache -fv
+print_success "Font cache rebuilt!"
+
+# ============================================================================
+# PART 1B: NODE.JS & TOOLS SETUP
+# ============================================================================
+
+print_status "Setting up Node.js and tools..."
+
+# Install Node.js with nvm
+if [ -f "$SCRIPT_DIR/scripts/install-node.sh" ]; then
+    bash "$SCRIPT_DIR/scripts/install-node.sh"
+fi
+
+# Install other tools
+if [ -f "$SCRIPT_DIR/scripts/install-tools.sh" ]; then
+    bash "$SCRIPT_DIR/scripts/install-tools.sh"
+fi
 
 # ============================================================================
 # PART 2: OH-MY-ZSH AND POWERLEVEL10K SETUP
@@ -228,7 +375,7 @@ print_status "Starting HyprX symlink setup..."
 mkdir -p "$HyprX"
 
 # List of config directories to symlink
-apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim")
+apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset")
 
 for app in "${apps[@]}"; do
     # Check if the app directory exists in HyprX
@@ -258,19 +405,8 @@ for app in "${apps[@]}"; do
 done
 
 # ============================================================================
-# PART 4: INSTALL FONT
+# PART 4: SYMLINK HOME FILES
 # ============================================================================
-
-yay -Sy ttf-jetbrains-mono-nerd
-
-# ============================================================================
-# PART 7: INSTALL ADDITIONAL YAY PACKAGES
-# ============================================================================
-
-yay -S nwg-look
-yay -S adw-gtk-theme
-yay -S ristretto
-yay -S baobab
 
 # Symlink home HyprX
 HOME_HyprX=(".zshrc" ".p10k.zsh" ".bashrc")
@@ -329,9 +465,100 @@ nvim --headless "+MasonInstallAll" +qa 2>/dev/null || print_warning "Mason insta
 print_success "Neovim setup complete!"
 
 # ============================================================================
-# PART 6: INSTALL FONT
+# PART 5B: BATTERY CONSERVATION SCRIPT
 # ============================================================================
-# PART 8: FINAL TOUCHES
+
+print_status "Setting up battery conservation script..."
+mkdir -p "$HOME/.local/bin"
+if [ -f "$SCRIPT_DIR/scripts/battery-limit.sh" ]; then
+    cp "$SCRIPT_DIR/scripts/battery-limit.sh" "$HOME/.local/bin/battery-limit.sh"
+    chmod +x "$HOME/.local/bin/battery-limit.sh"
+    print_success "Battery limit script installed to ~/.local/bin/battery-limit.sh"
+fi
+
+# Create aura-battery wrapper script
+print_status "Creating aura-battery wrapper..."
+cat > "$HOME/.local/bin/aura-battery" << 'EOF'
+#!/bin/bash
+PATH_TO="/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+
+case "$1" in
+    1|on)
+        echo 1 | sudo tee "$PATH_TO" > /dev/null
+        echo "Battery: 80% limit enabled"
+        ;;
+    0|off)
+        echo 0 | sudo tee "$PATH_TO" > /dev/null
+        echo "Battery: 100% charging enabled"
+        ;;
+    status|s)
+        status=$(cat "$PATH_TO")
+        [ "$status" = "1" ] && echo "ON (80%)" || echo "OFF (100%)"
+        ;;
+    *)
+        echo "Usage: aura-battery [1|0|status]"
+        echo "  1/on   - Enable 80% limit"
+        echo "  0/off  - Disable (100%)"
+        echo "  status - Check status"
+        ;;
+esac
+EOF
+chmod +x "$HOME/.local/bin/aura-battery"
+
+# Create symlink in /usr/local/bin so sudo can find it
+print_status "Creating symlink for sudo aura-battery..."
+if [ ! -f /usr/local/bin/aura-battery ]; then
+    ln -sf "$HOME/.local/bin/aura-battery" /usr/local/bin/aura-battery
+    print_success "Symlink created: /usr/local/bin/aura-battery"
+fi
+
+print_success "Battery conservation setup complete!"
+
+# ============================================================================
+# PART 5C: WIFI MENU SCRIPTS
+# ============================================================================
+
+print_status "Setting up wifi scripts..."
+if [ -f "$SCRIPT_DIR/scripts/fix-symlink.sh" ]; then
+    bash "$SCRIPT_DIR/scripts/fix-symlink.sh"
+    print_success "Wifi symlink fix applied"
+fi
+
+print_warning "Do you want to set up wifi menu scripts? (y/n)"
+read -r setup_wifi
+if [[ "$setup_wifi" =~ ^[Yy]$ ]]; then
+    if [ -f "$SCRIPT_DIR/scripts/wifite.sh" ]; then
+        print_status "Installing wifite utility..."
+        mkdir -p "$HOME/.local/bin"
+        cp "$SCRIPT_DIR/scripts/wifite.sh" "$HOME/.local/bin/wifite"
+        chmod +x "$HOME/.local/bin/wifite"
+        print_success "Wifite installed to ~/.local/bin/wifite"
+    fi
+    if [ -f "$SCRIPT_DIR/scripts/rofi-wifi-menu.sh" ]; then
+        print_status "Installing rofi wifi menu..."
+        cp "$SCRIPT_DIR/scripts/rofi-wifi-menu.sh" "$HOME/.local/bin/rofi-wifi-menu"
+        chmod +x "$HOME/.local/bin/rofi-wifi-menu"
+        print_success "Rofi wifi menu installed to ~/.local/bin/rofi-wifi-menu"
+    fi
+    print_warning "Bind rofi-wifi-menu in Hyprland: bind = SUPER, R, exec, ~/.local/bin/rofi-wifi-menu"
+fi
+
+# ============================================================================
+# PART 6: EXPORT PACKAGE LISTS
+# ============================================================================
+
+print_status "Would you like to update package lists? (y/n)"
+print_status "This exports your current packages to HyprX/packages/ for backup"
+read -r update_packages
+if [[ "$update_packages" =~ ^[Yy]$ ]]; then
+    if [ -f "$SCRIPT_DIR/scripts/package-list.sh" ]; then
+        bash "$SCRIPT_DIR/scripts/package-list.sh"
+        print_success "Package lists updated!"
+    fi
+fi
+
+# ============================================================================
+# PART 7: FINAL TOUCHES
 # ============================================================================
 
 # Check if we're on Hyprland and offer to reload
@@ -352,7 +579,7 @@ print_status "Installed packages:"
 echo -e "${GREEN}Official repositories:${NC} ${PACMAN_PACKAGES[*]}"
 echo -e "${GREEN}AUR packages:${NC} ${YAY_PACKAGES[*]}"
 echo ""
-print_status "Symlinks created for: ${apps[*]} and ${HOME_HyprX[*]}"
+print_status "Symlinks created for: ${apps[*]} and .bashrc, .zshrc, .p10k.zsh"
 echo ""
 print_warning "Next steps:"
 echo "  1. Restart your terminal or run 'source ~/.zshrc' to apply Zsh changes"
