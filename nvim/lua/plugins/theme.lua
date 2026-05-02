@@ -1,73 +1,73 @@
 --------------------------------------------------------------------
 --- Oxocarbon Theme
 --------------------------------------------------------------------
--- return {
---   {
---     "nyoom-engineering/oxocarbon.nvim",
---     priority = 1000,
---     config = function()
---       vim.o.termguicolors = true
---       vim.o.background = "dark"
-
---       vim.g.oxocarbon_lua_italics = true
-
---       vim.cmd.colorscheme("oxocarbon")
---     end,
---   },
--- }
---------------------------------------------------------------------
---- Catppuccin Theme (Mocha)
---------------------------------------------------------------------
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "nyoom-engineering/oxocarbon.nvim",
     priority = 1000,
     config = function()
       vim.o.termguicolors = true
       vim.o.background = "dark"
 
-      require("catppuccin").setup({
-        flavour = "macchiato", -- latte, frappe, macchiato, mocha
-        background = {
-          light = "latte",
-          dark = "mocha",
-        },
-        transparent_background = false,
-        show_end_of_buffer = false,
-        term_colors = true,
-        dim_inactive = {
-          enabled = false,
-        },
-        styles = {
-          comments = { "italic" },
-          conditionals = {},
-          loops = {},
-          functions = {},
-          keywords = {},
-          strings = {},
-          variables = {},
-          numbers = {},
-          booleans = {},
-          properties = {},
-          types = {},
-          operators = {},
-        },
-        integrations = {
-          treesitter = true,
-          native_lsp = {
-            enabled = true,
-          },
-          telescope = true,
-          cmp = true,
-          gitsigns = true,
-        },
-      })
+      vim.g.oxocarbon_lua_italics = true
 
-      vim.cmd.colorscheme("catppuccin")
+      vim.cmd.colorscheme("oxocarbon")
     end,
   },
 }
+--------------------------------------------------------------------
+--- Catppuccin Theme (Mocha)
+--------------------------------------------------------------------
+-- return {
+--   {
+--     "catppuccin/nvim",
+--     name = "catppuccin",
+--     priority = 1000,
+--     config = function()
+--       vim.o.termguicolors = true
+--       vim.o.background = "dark"
+
+--       require("catppuccin").setup({
+--         flavour = "macchiato", -- latte, frappe, macchiato, mocha
+--         background = {
+--           light = "latte",
+--           dark = "mocha",
+--         },
+--         transparent_background = false,
+--         show_end_of_buffer = false,
+--         term_colors = true,
+--         dim_inactive = {
+--           enabled = false,
+--         },
+--         styles = {
+--           comments = { "italic" },
+--           conditionals = {},
+--           loops = {},
+--           functions = {},
+--           keywords = {},
+--           strings = {},
+--           variables = {},
+--           numbers = {},
+--           booleans = {},
+--           properties = {},
+--           types = {},
+--           operators = {},
+--         },
+--         integrations = {
+--           treesitter = true,
+--           native_lsp = {
+--             enabled = true,
+--           },
+--           telescope = true,
+--           cmp = true,
+--           gitsigns = true,
+--         },
+--       })
+
+--       vim.cmd.colorscheme("catppuccin")
+--     end,
+--   },
+-- }
 --------------------------------------------------------------------
 ---Ever Forest
 --------------------------------------------------------------------

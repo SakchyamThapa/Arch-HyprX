@@ -1,0 +1,255 @@
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                              NEOVIM SHORTCUTS                                   │
+│                            HyprX Configuration                                  │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  INSERT MODE                                                               │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  jk            → Exit insert mode (timeout: 200ms)                              │
+│  Shift+Tab     → Accept Copilot suggestion                                      │
+│  Ctrl+y        → Accept completion (blink.cmp)                                  │
+│  Enter         → Accept completion (blink.cmp)                                  │
+│  Ctrl+n        → Select next completion item                                    │
+│  Ctrl+p        → Select previous completion item                                │
+│  Down          → Select next completion item                                    │
+│  Up            → Select previous completion item                                │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  WINDOW NAVIGATION                                                         │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  Ctrl+h        → Move focus to left window                                      │
+│  Ctrl+j        → Move focus to below window                                     │
+│  Ctrl+k        → Move focus to above window                                     │
+│  Ctrl+l        → Move focus to right window                                     │
+│  Ctrl+1..9     → Focus specific window (1-9)                                    │
+│  Ctrl+\        → Toggle floating terminal (ToggleTerm)                          │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  FILE & TEXT SEARCH (Telescope)                                            │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  Ctrl+p        → Find files in project                                          │
+│  Ctrl+g        → Grep text in project (live search)                             │
+│  \             → List open buffers                                              │
+│  sf            → Open Telescope File Browser                                    │
+│  <leader>ft    → Search TODO comments                                           │
+│                                                                                 │
+│  ┌── Inside Telescope (Insert Mode) ──────────────────────────────────────────┐ │
+│  │  Ctrl+j      → Move selection down                                          │ │
+│  │  Ctrl+k      → Move selection up                                            │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  FILE NAVIGATION & TREE                                                    │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  <leader>e     → Toggle NvimTree file explorer                                  │
+│  Ctrl+b        → Toggle NvimTree file explorer                                  │
+│  sf            → Open Telescope File Browser                                    │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  BUFFER MANAGEMENT                                                         │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  Ctrl+x        → Close all other buffers safely                                 │
+│  \             → List all open buffers (Telescope)                              │
+│  :bd           → Delete current buffer                                          │
+│  :w            → Save current file                                              │
+│  :q            → Quit current window                                            │
+│  :wq           → Save and quit                                                  │
+│  :qa           → Quit all windows                                               │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  LSP (Language Server Protocol)                                            │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  gd            → Go to definition                                               │
+│  gD            → Go to declaration                                              │
+│  gr            → Go to references                                               │
+│  K             → Hover (show documentation)                                     │
+│  <leader>rn    → Rename symbol                                                  │
+│  <leader>de    → Show diagnostic under cursor                                   │
+│  <leader>dl    → List all diagnostics in location list                          │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  FORMATTING                                                                │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  <leader>mp    → Format file or selection (in visual mode)                      │
+│                 (Auto-formats on save with lsp_fallback)                        │
+│                                                                                 │
+│  ┌── Formatters by Language ──────────────────────────────────────────────────┐ │
+│  │  JS/TS/React   → prettier                                                   │ │
+│  │  CSS/HTML      → prettier                                                   │ │
+│  │  JSON/YAML     → prettier                                                   │ │
+│  │  Markdown      → prettier                                                   │ │
+│  │  Lua           → stylua                                                     │ │
+│  │  Python        → isort + black                                              │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  TEXT SURROUND (nvim-surround)                                             │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  ys{motion}{c} → Add surround around motion with character c                    │
+│  ds{c}         → Delete surround with character c                               │
+│  cs{old}{new}  → Change surround from old to new                                │
+│  S{visual}{c}  → Surround visual selection with character c                     │
+│  ys{motion})   → Wrap in parentheses: ()                                        │
+│  ys{motion}"   → Wrap in double quotes: ""                                      │
+│  ys{motion}'   → Wrap in single quotes: ''                                      │
+│  ys{motion}[   → Wrap in brackets: []                                           │
+│  ys{motion}{   → Wrap in braces: {}                                             │
+│  ys{motion}<   → Wrap in angle brackets: <>                                     │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  DEBUGGING (DAP - Python)                                                  │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  <leader>db    → Toggle breakpoint                                              │
+│  <leader>dc    → Continue / Start debugger                                      │
+│  <leader>do    → Step Over                                                      │
+│  <leader>di    → Step Into                                                      │
+│  <leader>dO    → Step Out                                                       │
+│  <leader>dq    → Terminate debugging                                            │
+│  <leader>du    → Toggle DAP UI                                                  │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  COMMENTS & TODOS                                                          │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  gcc           → Toggle comment on current line (LazyVim default)               │
+│  gc{motion}    → Comment motion (e.g., gcip for paragraph)                      │
+│  ]t            → Jump to next todo/developer comment                            │
+│  [t            → Jump to previous todo/developer comment                        │
+│  <leader>ft    → Search all TODOs in Telescope                                  │
+│                                                                                 │
+│  ┌── Custom Comment Keywords ─────────────────────────────────────────────────┐ │
+│  │  DEVNOTE    🛠  |  CHECKME    🔍  |  REFACTOR    🔧                       │ │
+│  │  DEBUG      🐞  |  REVIEW     👀  |  DEPRECATED  ⚠️                        │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  SESSIONS (auto-session)                                                   │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  <leader>ss    → Save current session                                           │
+│  <leader>sl    → Restore last session                                           │
+│  <leader>sd    → Delete session                                                 │
+│                 (Auto-saves on exit)                                            │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  MACROS                                                                    │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  q{a-z}        → Start recording macro into register a-z                        │
+│  q             → Stop recording macro (when already recording)                  │
+│  @{a-z}        → Play macro from register a-z                                   │
+│  @@            → Replay last executed macro                                     │
+│  :let @a='command' → Set macro directly                                         │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  LAZYVIM DEFAULT SHORTCUTS                                                 │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  ┌── File Operations ─────────────────────────────────────────────────────────┐ │
+│  │  <leader>w      → Save file                                                 │ │
+│  │  <leader>qq     → Quit all buffers                                         │ │
+│  │  <leader>qw     → Write all buffers                                        │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  ┌── Search ──────────────────────────────────────────────────────────────────┐ │
+│  │  <leader>ff     → Find files (Telescope)                                    │ │
+│  │  <leader>fg     → Grep (live grep)                                          │ │
+│  │  <leader>fs     → Save file                                                 │ │
+│  │  <leader>fw     → Find word under cursor                                    │ │
+│  │  <leader>fr     → Resume last search                                        │ │
+│  │  <leader>fl     → Find recent files                                         │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  ┌── Buffer Navigation ───────────────────────────────────────────────────────┐ │
+│  │  <leader>bb     → Switch buffers                                            │ │
+│  │  <leader>bd     → Delete buffer                                             │ │
+│  │  <leader>bn     → Next buffer                                               │ │
+│  │  <leader>bp     → Previous buffer                                           │ │
+│  │  ]b           → Next buffer                                                │ │
+│  │  [b           → Previous buffer                                            │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  ┌── Git ─────────────────────────────────────────────────────────────────────┐ │
+│  │  <leader>gg     → Open lazygit                                              │ │
+│  │  <leader>gb     → Git blame                                                 │ │
+│  │  <leader>gc     → Git browse                                                │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  ┌────────────────────────────────────────────────────────────────────────────┐ │
+│  │  QUICK REFERENCE CHEAT SHEET                                               │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+│  MOST USED:                                                                     │
+│  Ctrl+p        → Find files (QUICKEST WAY TO SEARCH)                            │
+│  Ctrl+g        → Search text in all files                                       │
+│  <leader>e     → Toggle file tree                                               │
+│  K             → Hover documentation (LSP)                                      │
+│  gd            → Go to definition                                               │
+│  gr            → Find references                                                │
+│  gcc           → Comment/uncomment line                                         │
+│  Ctrl+\        → Toggle terminal                                                │
+│  <leader>ff    → Find files (LazyVim)                                           │
+│  <leader>fg    → Grep search (LazyVim)                                          │
+│  <leader>w     → Save                                                           │
+│  <leader>qq    → Quit                                                           │
+│                                                                                 │
+│  ┌── Common Text Objects ─────────────────────────────────────────────────────┐ │
+│  │  ciw          → Change inner word                                           │ │
+│  │  ci"          → Change inside quotes                                       │ │
+│  │  ci(          → Change inside parentheses                                  │ │
+│  │  ca{          → Change around braces                                        │ │
+│  │  di[          → Delete inside brackets                                     │ │
+│  │  yi<          → Yank inside angle brackets                                 │ │
+│  └────────────────────────────────────────────────────────────────────────────┘ │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
