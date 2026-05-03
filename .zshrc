@@ -42,9 +42,13 @@ source $ZSH/oh-my-zsh.sh
 # autoload -Uz _aura
 # compinit -C
 
+#for using opencode
+export PATH=/home/aura/.opencode/bin:$PATH
+
 alias eng="nepkal gcal"
 alias nep="nepkal"
 alias file="yazi"
+alias op="opencode"
 
 # Main aura command function with subcommands
 aura() {
