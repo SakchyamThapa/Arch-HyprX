@@ -49,6 +49,7 @@ alias eng="nepkal gcal"
 alias nep="nepkal"
 alias file="yazi"
 alias op="opencode"
+alias n="nvim"
 
 # Main aura command function with subcommands
 aura() {
