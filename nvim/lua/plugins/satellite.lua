@@ -1,46 +1,42 @@
 -----------------------------------------------------------------------
 ----- Mini maps plugins for cursor, diagnostics
 -----------------------------------------------------------------------
----return {
----  "lewis6991/satellite.nvim",
----  event = "BufReadPost",
----  config = function()
----    local ok, satellite = pcall(require, "satellite")
----    if not ok then
----      vim.notify("satellite.nvim not loaded!", vim.log.levels.ERROR)
----      return
----    end
----
----    satellite.setup({
----      current_only = false,
----      winblend = 50,
----      zindex = 40,
----      width = 2,
----      handlers = {
----        cursor = {
----          enable = true,
----          symbols = { "⎺", "⎻", "⎼", "⎽" },
----        },
----        search = { enable = true },
----        diagnostic = {
----          enable = true,
----          signs = { "-", "=", "≡" },
----          min_severity = vim.diagnostic.severity.HINT,
----        },
----        -- gitsigns = {
----        --   enable = true,
----        --   signs = { add = "│", change = "│", delete = "-" },
----        -- },
----        marks = {
----          enable = true,
----          show_builtins = false,
----          key = "m",
----        },
----        quickfix = {
----          enable = true,
----          signs = { "-", "=", "≡" },
----        },
----      },
----    })
----  end,
----}
+return {
+  "lewis6991/satellite.nvim",
+  event = "BufReadPost",
+  config = function()
+    local ok, satellite = pcall(require, "satellite")
+    if not ok then
+      vim.notify("satellite.nvim not loaded!", vim.log.levels.ERROR)
+      return
+    end
+
+    satellite.setup({
+      current_only = false,
+      winblend = 50,
+      zindex = 40,
+      width = 2,
+      handlers = {
+        cursor = {
+          enable = true,
+          symbols = { "⎺", "⎻", "⎼", "⎽" },
+        },
+        search = { enable = true },
+        diagnostic = {
+          enable = true,
+          signs = { "-", "=", "≡" },
+          min_severity = vim.diagnostic.severity.HINT,
+        },
+        marks = {
+          enable = true,
+          show_builtins = false,
+          key = "m",
+        },
+        quickfix = {
+          enable = true,
+          signs = { "-", "=", "≡" },
+        },
+      },
+    })
+  end,
+}
