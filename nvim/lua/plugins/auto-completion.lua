@@ -27,13 +27,6 @@ return {
           ["<Up>"] = { "select_prev", "fallback" },
           ["<C-n>"] = { "select_next", "fallback" },
           ["<C-p>"] = { "select_prev", "fallback" },
-          ["<Tab>"] = function(cmp)
-            local ok, copilot = pcall(require, "copilot.suggestion")
-            if ok and copilot.is_visible() then
-              copilot.accept()
-              return true
-            end
-          end,
         },
         sources = {
           default = { "lsp", "path", "snippets", "buffer" },
