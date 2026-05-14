@@ -104,7 +104,7 @@ keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Search TODO co
 -- keymap.set(
 --   "n",
 --   "<leader>on",
---   ":ObsidianTemplate note<CR>:lua.cmd([[1,/^\\S/s/^\\n\\{1,}//]])<CR>",
+--   ":ObsidianTemplate note<CR>:lua.cmd([[1,/^\\S/s/^\\n\\{1,}//]]<CR>",
 --   { noremap = true, silent = true }
 -- )
 -- keymap.set("n", "<leader>of", ":s/\\(# \\)[^_]*_/\\1/ | s/-/ /g<CR>")
