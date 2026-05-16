@@ -42,8 +42,8 @@ return {
         indent_width = 2,
       },
 
-      filters = {
-        dotfiles = false,
+filters = {
+        dotfiles = true,
       },
 
       git = {
