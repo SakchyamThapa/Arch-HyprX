@@ -173,6 +173,7 @@ PACMAN_PACKAGES=(
     "nautilus"
     "mousepad"
     "baobab"
+    "mpv"
     
     # Dev Tools
     "neovim"
