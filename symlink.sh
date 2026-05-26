@@ -12,7 +12,7 @@ echo "Starting HyprX symlink setup..."
 mkdir -p "$HyprX"
 
 # List of apps to symlink
-apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset")
+apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset" "scripts")
 
 for app in "${apps[@]}"; do
     if [ -e "$CONFIG/$app" ] && [ ! -L "$CONFIG/$app" ]; then

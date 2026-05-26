@@ -43,7 +43,7 @@ source $ZSH/oh-my-zsh.sh
 # compinit -C
 
 #for using opencode
-export PATH=/home/aura/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 alias eng="nepkal gcal"
 alias nep="nepkal"

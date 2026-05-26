@@ -27,4 +27,4 @@ swaync > /dev/null 2>&1 &
 
 sleep 0.5
 
-notify-send "Theme Applied" "Wallpaper and theme updated successfully!"t
+notify-send "Theme Applied" "Wallpaper and theme updated successfully!"
