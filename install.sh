@@ -13,6 +13,16 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Non-interactive mode (pass -y or --yes to auto-answer yes to all prompts)
+NONINTERACTIVE=false
+for arg in "$@"; do
+    case "$arg" in
+        -y|--yes)
+            NONINTERACTIVE=true
+            ;;
+    esac
+done
+
 # Print colored output
 print_status() {
     echo -e "${BLUE}[INFO]${NC} $1"
@@ -60,9 +70,16 @@ chmod +x "$SCRIPT_DIR/waybar/launch.sh" 2>/dev/null || true
 
 print_status "Starting package installation..."
 
-# Update system first
-print_status "Updating system packages..."
-sudo pacman -Syu --noconfirm
+# Update system first (skip with -y flag)
+if [ "$NONINTERACTIVE" = false ]; then
+    print_warning "Do you want to update system packages? (y/n)"
+    read -r do_update || true
+    if [[ "$do_update" =~ ^[Yy]$ ]]; then
+        sudo pacman -Syu --noconfirm
+    fi
+else
+    print_status "Skipping system update (non-interactive mode)"
+fi
 
 # Install base-devel and git if not present (required for yay)
 print_status "Installing base-devel and git..."
@@ -86,7 +103,6 @@ fi
 PACMAN_PACKAGES=(
     # Core
     "base"
-    "base-devel"
     "git"
     "sudo"
     "zsh"
@@ -108,15 +124,12 @@ PACMAN_PACKAGES=(
     "xdg-desktop-portal-hyprland"
     "xdg-utils"
     "xdg-user-dirs"
-    "xorg-server"
-    "xorg-xinit"
     "qt5-wayland"
     "qt6-wayland"
     "qt5-base"
     
     # Terminal & Shells
     "kitty"
-    "zsh"
     
     # Status bar & Apps
     "waybar"
@@ -164,9 +177,9 @@ PACMAN_PACKAGES=(
     "nvidia-open-dkms"
     "nvidia-utils"
     "libva-nvidia-driver"
+    "awww"
     "amd-ucode"
     "linux-firmware"
-    "libva-nvidia-driver"
     
     # File Managers & Media
     "dolphin"
@@ -188,12 +201,9 @@ PACMAN_PACKAGES=(
     "firefox"
     "vivaldi"
     "vivaldi-ffmpeg-codecs"
-    "brave-bin"
     
     # Communication
     "discord"
-    "slack-desktop"
-    "postman-bin"
     
     # Virtualization & Containers
     "docker"
@@ -216,21 +226,15 @@ PACMAN_PACKAGES=(
     "noto-fonts-emoji"
 )
 
-# Array of packages to install via yay (AUR) (from packages/aur.txt)
+# Array of packages to install via yay (AUR)
 YAY_PACKAGES=(
-    "visual-studio-code-bin"
     "yay"
+    "visual-studio-code-bin"
     "brave-bin"
     "postman-bin"
     "slack-desktop"
-    "discord"
-    "dbeaver"
-    "nwg-look"
-    "adw-gtk-theme"
-    "ristretto"
-    "baobab"
-    "ttf-jetbrains-mono-nerd"
     "bibata-cursor-theme"
+    "matugen"
 )
 
 # Install pacman packages
@@ -286,17 +290,25 @@ fi
 # ============================================================================
 
 # Optional: Install Oh My Zsh and Powerlevel10k
-print_warning "Do you want to set up/update Oh My Zsh and Powerlevel10k? (y/n)"
-read -r install_zsh
+if [ "$NONINTERACTIVE" = true ]; then
+    install_zsh="y"
+else
+    print_warning "Do you want to set up/update Oh My Zsh and Powerlevel10k? (y/n)"
+    read -r install_zsh || true
+fi
 if [[ "$install_zsh" =~ ^[Yy]$ ]]; then
     # Check if Oh My Zsh is already installed
     if [ -d "$HOME/.oh-my-zsh" ]; then
-        print_status "Oh My Zsh is already installed at $HOME/.oh-my-zsh"
-        print_warning "Do you want to:"
-        echo "1) Keep existing installation and just install/update Powerlevel10k"
-        echo "2) Reinstall Oh My Zsh (backup existing configuration)"
-        echo "3) Skip Oh My Zsh setup"
-        read -r zsh_choice
+        if [ "$NONINTERACTIVE" = true ]; then
+            zsh_choice="1"
+        else
+            print_status "Oh My Zsh is already installed at $HOME/.oh-my-zsh"
+            print_warning "Do you want to:"
+            echo "1) Keep existing installation and just install/update Powerlevel10k"
+            echo "2) Reinstall Oh My Zsh (backup existing configuration)"
+            echo "3) Skip Oh My Zsh setup"
+            read -r zsh_choice || true
+        fi
 
         case $zsh_choice in
             1)
@@ -341,10 +353,8 @@ if [[ "$install_zsh" =~ ^[Yy]$ ]]; then
         cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d-%H%M%S)"
 
         if grep -q "ZSH_THEME=" "$HOME/.zshrc"; then
-            # Update existing theme
             sed -i 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' "$HOME/.zshrc"
         else
-            # Add theme if not present
             echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >> "$HOME/.zshrc"
         fi
         print_success "Updated ZSH_THEME in .zshrc"
@@ -352,9 +362,13 @@ if [[ "$install_zsh" =~ ^[Yy]$ ]]; then
 
     # Check for existing Powerlevel10k configuration
     if [ -f "$HOME/.p10k.zsh" ]; then
-        print_status "Found existing Powerlevel10k configuration at $HOME/.p10k.zsh"
-        print_warning "Do you want to keep this configuration? (y/n)"
-        read -r keep_p10k_config
+        if [ "$NONINTERACTIVE" = false ]; then
+            print_status "Found existing Powerlevel10k configuration at $HOME/.p10k.zsh"
+            print_warning "Do you want to keep this configuration? (y/n)"
+            read -r keep_p10k_config || true
+        else
+            keep_p10k_config="y"
+        fi
         if [[ "$keep_p10k_config" =~ ^[Yy]$ ]]; then
             print_success "Keeping existing Powerlevel10k configuration"
         else
@@ -376,7 +390,7 @@ print_status "Starting HyprX symlink setup..."
 mkdir -p "$HyprX"
 
 # List of config directories to symlink
-apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset")
+apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset" "scripts")
 
 for app in "${apps[@]}"; do
     # Check if the app directory exists in HyprX
@@ -427,6 +441,15 @@ for file in "${HOME_HyprX[@]}"; do
 done
 
 print_success "HyprX symlink setup complete!"
+
+# Copy walset-backend.sh to ~/.local/bin/ for wallpaper picker
+print_status "Setting up walset wallpaper backend..."
+mkdir -p "$HOME/.local/bin"
+if [ -f "$SCRIPT_DIR/walset/walset-backend.sh" ]; then
+    cp "$SCRIPT_DIR/walset/walset-backend.sh" "$HOME/.local/bin/walset-backend.sh"
+    chmod +x "$HOME/.local/bin/walset-backend.sh"
+    print_success "walset-backend.sh installed to ~/.local/bin/walset-backend.sh"
+fi
 
 # ============================================================================
 # PART 5: NEOVIM & PYTHON SETUP
@@ -525,8 +548,12 @@ if [ -f "$SCRIPT_DIR/scripts/fix-symlink.sh" ]; then
     print_success "Wifi symlink fix applied"
 fi
 
-print_warning "Do you want to set up wifi menu scripts? (y/n)"
-read -r setup_wifi
+if [ "$NONINTERACTIVE" = true ]; then
+    setup_wifi="y"
+else
+    print_warning "Do you want to set up wifi menu scripts? (y/n)"
+    read -r setup_wifi || true
+fi
 if [[ "$setup_wifi" =~ ^[Yy]$ ]]; then
     if [ -f "$SCRIPT_DIR/scripts/wifite.sh" ]; then
         print_status "Installing wifite utility..."
@@ -548,9 +575,13 @@ fi
 # PART 6: EXPORT PACKAGE LISTS
 # ============================================================================
 
-print_status "Would you like to update package lists? (y/n)"
-print_status "This exports your current packages to HyprX/packages/ for backup"
-read -r update_packages
+if [ "$NONINTERACTIVE" = true ]; then
+    update_packages="n"
+else
+    print_status "Would you like to update package lists? (y/n)"
+    print_status "This exports your current packages to HyprX/packages/ for backup"
+    read -r update_packages || true
+fi
 if [[ "$update_packages" =~ ^[Yy]$ ]]; then
     if [ -f "$SCRIPT_DIR/scripts/package-list.sh" ]; then
         bash "$SCRIPT_DIR/scripts/package-list.sh"
@@ -564,8 +595,12 @@ fi
 
 # Check if we're on Hyprland and offer to reload
 if [ "$XDG_SESSION_DESKTOP" = "hyprland" ]; then
-    print_warning "Do you want to reload Hyprland configuration? (y/n)"
-    read -r reload_hypr
+    if [ "$NONINTERACTIVE" = true ]; then
+        reload_hypr="n"
+    else
+        print_warning "Do you want to reload Hyprland configuration? (y/n)"
+        read -r reload_hypr || true
+    fi
     if [[ "$reload_hypr" =~ ^[Yy]$ ]]; then
         hyprctl reload
         print_success "Hyprland reloaded"
