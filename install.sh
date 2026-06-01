@@ -187,6 +187,9 @@ PACMAN_PACKAGES=(
     "mousepad"
     "baobab"
     "mpv"
+    "yazi"
+    "flameshot"
+    "dbeaver"
     
     # Dev Tools
     "neovim"
@@ -196,6 +199,8 @@ PACMAN_PACKAGES=(
     "python"
     "python-pip"
     "python-virtualenv"
+    "git-lfs"
+    "uv"
     
     # Browsers
     "firefox"
@@ -217,13 +222,20 @@ PACMAN_PACKAGES=(
     "zram-generator"
     "power-profiles-daemon"
     "polkit-kde-agent"
+    "reflector"
+    "xorg-server"
+    "xorg-xinit"
     
     # Security
     "gdm"
+    "gnome-keyring"
     
     # Fonts
     "ttf-jetbrains-mono-nerd"
     "noto-fonts-emoji"
+    
+    # Office
+    "libreoffice-fresh"
 )
 
 # Array of packages to install via yay (AUR)
@@ -235,6 +247,9 @@ YAY_PACKAGES=(
     "slack-desktop"
     "bibata-cursor-theme"
     "matugen"
+    "grimblast-git"
+    "ngrok"
+    "nmgui"
 )
 
 # Install pacman packages
@@ -390,7 +405,7 @@ print_status "Starting HyprX symlink setup..."
 mkdir -p "$HyprX"
 
 # List of config directories to symlink
-apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset" "scripts")
+apps=("hypr" "kitty" "rofi" "waybar" "swaync" "nvim" "completions" "fastfetch" "walset" "scripts" "gtk-3.0" "gtk-4.0" "xsettingsd" "mpv" "autostart")
 
 for app in "${apps[@]}"; do
     # Check if the app directory exists in HyprX
@@ -424,7 +439,7 @@ done
 # ============================================================================
 
 # Symlink home HyprX
-HOME_HyprX=(".zshrc" ".p10k.zsh" ".bashrc")
+HOME_HyprX=(".zshrc" ".p10k.zsh" ".bashrc" ".bash_profile" ".gitconfig" ".gtkrc-2.0")
 for file in "${HOME_HyprX[@]}"; do
     if [ -f "$HyprX/$file" ]; then
         print_status "Setting up symlink for $file..."
