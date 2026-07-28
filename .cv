@@ -1,0 +1,136 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot,
+    top=2 cm,
+    bottom=2 cm,
+    left=2 cm,
+    right=2 cm,
+    footskip=1.0 cm,
+]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 0, 0}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage[
+    pdftitle={Sakchyam Thapa CV},
+    pdfauthor={Sakchyam Thapa},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref}
+\usepackage{charter}
+
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{0.15cm}
+\pagenumbering{gobble}
+
+\titleformat{\section}{\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\begin{document}
+
+% Header
+\begin{center}
+    {\LARGE \textbf{Sakchyam Thapa}} \\[15pt]
+
+    Shantinagar, Kathmandu \\[10pt]
+
+    \faEnvelope~\href{mailto:sakchyamthapa.2006@gmail.com}{sakchyamthapa.2006@gmail.com } \quad
+    \faPhone~+977 9863333559 \quad
+    \faGithub~\href{https://github.com/SakchyamThapa}{SakchyamThapa} \quad
+    \faLinkedin~\href{https://www.linkedin.com/in/sakchyam-thapa-894730343/}{Sakchyam Thapa}
+\end{center}
+
+\section{Technical Stack}
+
+\begin{itemize}
+    \item \textbf{Databases \& SQL:} PostgreSQL, SQL Server, SQLite, Microsoft SQL, SQLAlchemy, EF Core, Query Optimization
+    \item \textbf{AI \& Machine Learning:} Python (OOP), Data Preprocessing, Feature Engineering, Model Evaluation, Regression Models
+    \item \textbf{Vector Databases \& RAG:} Pinecone, Similarity Search
+    \item \textbf{Mathematics:} Linear Algebra, Probability
+    \item \textbf{Python Libraries \& Frameworks:} Scikit-Learn, Pandas, NumPy, SciPy, Matplotlib, Seaborn, FastAPI, Flask, Dramatiq, Kafka-Python
+    \item \textbf{Programming Languages:} Python, .NET
+    \item \textbf{Linux \& Systems:} Arch Linux, Hyprland (Wayland Compositor), Shell Scripting (Bash/Zsh), Systemd, Process Management (htop, ps), Symlinks \& Filesystem (\texttt{ln}, \texttt{tree}), Package Management (pacman, yay, AUR)
+    \item \textbf{DevOps \& Deployment:} Git, GitHub, GitLab, Docker \& Docker Compose, AWS (EC2), ngrok
+    \item \textbf{Web Development:} HTML, CSS, JavaScript, FastAPI, Flask, SQL, .NET Blazor, .NET Web API, ASP.NET Core, Identity Framework, EF Core
+\end{itemize}
+
+
+\section{Education}
+\textbf{London Metropolitan University} \hfill 2022 -- 2025 \\
+BSc. (Hons) Computing
+
+\section{Experience}
+\textbf{Python Backend Developer Intern, BrahmaByte Pvt. Ltd.} \hfill Jan 2026 -- April 2026, Kathmandu
+\begin{itemize}
+    \item Built and maintained backend APIs using FastAPI and Python with clean code principles
+    \item Worked with PostgreSQL and SQL Server; wrote optimized, clean SQL queries for data operations
+    \item Implemented async task queuing with Dramatiq and message streaming with Apache Kafka
+    \item Containerized services using Docker for consistent development and deployment environments
+    \item Managed codebase using GitHub with structured branching and version control workflows
+    \item Gained hands-on experience with database design, query optimization, and backend architecture
+\end{itemize}
+
+\textbf{Junior .NET Developer, Intelisoft Nepal} \hfill November 2024 -- March 2025, Kathmandu
+\begin{itemize}
+    \item VAT Reconciliation Project for United Nations
+    \item SMS Template System using SMS and Email OTP Verification
+    \item Nepal Police Digital Daily System
+\end{itemize}
+
+\section{Projects}
+
+\begin{itemize}
+    \item \textbf{Bike Rental Web Application:}
+    Developed an AI-powered web application to predict bike rental demand based on weather conditions. Applied regression models on temperature, humidity, and environmental data to support demand forecasting and resource optimization.
+
+    \item \textbf{House Rental Prediction:}
+    Built a machine learning model to estimate house rental prices using location, size, and amenities. Performed data preprocessing, feature engineering, and regression-based prediction.
+
+    \item \textbf{Car Price Prediction:}
+    Developed a supervised learning model to predict used car prices based on brand, model, year, mileage, and condition using regression techniques.
+
+    \item \textbf{SonicPoints (Task Management System with Rewards):}
+    Designed a Kanban-based task management system with a KPI-driven reward mechanism, allowing users to earn and redeem points based on task completion.
+
+    \item \textbf{Student Management System (Role-Based Backend):}
+    Developed a backend using \textbf{FastAPI}, \textbf{SQLAlchemy}, \textbf{PostgreSQL}, and \textbf{JWT authentication}. Implemented role-based access control (Admin, Teacher, Student) with complete CRUD operations for users, courses, assignments, and grading.
+
+    \item \textbf{Laptop Inventory \& Billing System (OOP + FastAPI):}
+    Built an inventory management backend using \textbf{FastAPI}, \textbf{Python OOP}, and \textbf{PostgreSQL}. Implemented CRUD operations, buy/sell workflows with stock updates, PDF bill generation, and admin dashboards.
+
+    \item \textbf{Task Management API:}
+    Developed a RESTful backend using \textbf{FastAPI}, \textbf{SQLite}, \textbf{SQLAlchemy}, and \textbf{JWT}. Implemented authentication, project/task CRUD operations, task assignments, and status tracking.
+
+    \item \textbf{Online Bookstore API:}
+    Created an e-commerce backend using \textbf{FastAPI}, \textbf{SQLAlchemy}, \textbf{PostgreSQL}, and \textbf{JWT authentication}. Implemented book inventory management, cart handling, order placement, and automatic stock updates.
+
+    \item \textbf{RAG-Based AI Chatbot (FastAPI + Streamlit):}
+    Developed a Retrieval-Augmented Generation chatbot using \textbf{FastAPI}, \textbf{Streamlit}, \textbf{Pinecone}, and transformer-based embeddings. Implemented document chunking, vector similarity search, and LLM-based response generation.
+
+    \item \textbf{Web Scraping \& Change Detection System:}
+    Built an automated web scraping system using \textbf{Flask}, \textbf{Playwright (async)}, and \textbf{SQL Server}. Implemented concurrent scraping, product change detection, pagination, filtering, and real-time status monitoring.
+
+    \item \textbf{Flame Detection \& Alert System (Computer Vision):}
+    Developed a real-time flame detection system using \textbf{OpenCV} and HSV color segmentation. Implemented contour-based detection, noise reduction, debounce logic, and audio alerts using \textbf{Pygame}.
+
+    \item \textbf{AI-Enhanced Parking System:}
+    Integrated IoT, cloud computing, and object detection to identify parking availability and update real-time dashboards.
+
+    \item \textbf{E-Commerce Platform (Java JEE):}
+    Developed a full-stack e-commerce platform using Java JEE with product management, user authentication, and secure payment gateway integration.
+
+    \item \textbf{StreamCart (Data Engineering Pipeline):}
+    Built an end-to-end data pipeline using \textbf{Python}, \textbf{Pandas}, and \textbf{SQLite}, following a Bronze/Silver/Gold architecture with batch and streaming ingestion, data validation, and SQL-based analytics.
+
+    \item \textbf{HyprX (Arch Linux Hyprland Dotfiles):}
+    Built a fully automated Arch Linux desktop environment using \textbf{Hyprland}, \textbf{Waybar}, \textbf{Rofi}, \textbf{Kitty}, and \textbf{Neovim}. Developed install and symlink automation scripts managing 95+ packages, custom wallpaper picker (\textbf{awww} + \textbf{Rofi}), Wi-Fi menu, GTK theming, and Powerlevel10k ZSH configuration. Maintained via \textbf{Git} with structured branching across multiple feature branches.
+\end{itemize}
+
+\end{document}
